@@ -151,7 +151,10 @@ $(() => {
         title: ' ',
         text:
           `Copie e cole o link abaixo para compartilhar este bicicletário:<br><br>\
-          <a href="${window.location.href}">${window.location.href}</a>`, 
+            <a href="${window.location.href}" id="copieMe" type="text">${window.location.href}</a>\
+            <button class="link-button copy-to-clipboard-btn" data-clipboard-target="#copieMe"><span class="glyphicon glyphicon-copy"></button>\
+            </span>\
+          `, 
         type: 'info',
         html: true
       });
@@ -1991,6 +1994,9 @@ $(() => {
       'closeButton': false,
       'progressBar': false,
     }
+
+    // copy to clipboard button
+    new Clipboard('.copy-to-clipboard-btn');
 
     const sidenavHideCallback = () => {
       // @todo explain me
