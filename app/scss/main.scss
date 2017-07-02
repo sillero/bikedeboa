@@ -403,7 +403,6 @@ a,
     left: 0;
     right: 0;
     margin: auto;
-    z-index: 1;
     width: 95%;
     height: 48px;
     max-width: 600px;
@@ -414,34 +413,12 @@ a,
     transition: top 0.5s ease-out, opacity 0.5s ease-out;
     opacity: 0;
 
-    // &:before {
-    //     position: relative;
-    //     top: 1px;
-    //     display: inline-block;
-    //     font-family: $bootstrapFont;
-    //     font-weight: 400;
-    //     line-height: 1;
-    //     content: "\e003";
-    //     position: absolute;
-    //     font-size: 16px;
-    //     top: 0;
-    //     left: 0;
-    //     /* opacity: 0.5; */
-    //     color: grey;
-    //     padding: 15px;
-    //     // background: $green;
-    //     // color: $lightestGray;
-    //     color: $green;
-    //     // color: $lightGray;
-    // }
-
     input {
         width: 100%;
         font-size: 14px;
         padding: 0 50px 0 60px;
-        // font-weight: lighter;
-        border-radius: 3px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        @include material-shadow(1);
 
         border: none;
         // border-bottom: 3px solid $green;
@@ -475,11 +452,10 @@ a,
       .search-icon {
         opacity: 1;
         visibility: visible;
+        position: absolute;
 
         height: 20px;
-        position: absolute;
-        right: 10px;
-        top: 10px;
+        margin-top: 5px;
       }
 
       .clear-icon {
@@ -629,6 +605,14 @@ a,
     height: 50px;
     text-align: center;
     filter: grayscale(100%);
+
+    color: $green;
+    width: '100%';
+    
+    img {
+      width: 20px;
+      margin-top: 14px;
+    }
     
     @include material-shadow(2);
 
@@ -977,10 +961,9 @@ a,
 
 .modal-content {
     border: 0;
-    margin-top: 50px;
+    margin-top: 10px;
     margin-bottom: 100px;
     @include material-shadow(3);
-    // border-radius: 10px; //not working? :(
 
     .text-input-wrapper {
         position: relative;
@@ -1013,7 +996,7 @@ a,
     }
 
     #titleInput {
-        border-radius: 3px;
+        border-radius: 5px;
         border: 2px solid $lighterGray;
         // font-size: 30px;
 
@@ -1058,7 +1041,7 @@ a,
         /* color: $gray; */
         /* border-top: $separatorBorderStyle; */
         background: $lightestGray;
-        border-radius: 10px;
+        border-radius: 5px;
         color: rgb(100,100,100);
         text-align: left;
 
@@ -1530,7 +1513,7 @@ a,
     // font-family: $headingFont;
     font-weight: 700;
     color: #fff;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 3px 10px;
     background-color: $gray; //to be overriden
 }
@@ -1713,7 +1696,7 @@ a,
 .btn-tag {
     background: $lightestGray;
     color: #939a9d;
-    border-radius: 10px;
+    border-radius: 25px;
     margin: 5px 2px;
 
     &:before {
@@ -1875,11 +1858,11 @@ a,
 }
 */
 
-.skeleton-box {
-    background: rgba(0,0,0,0.1);
-    display: inline-block;
-    border-radius: 10px;
-}
+// .skeleton-box {
+//     background: rgba(0,0,0,0.1);
+//     display: inline-block;
+//     border-radius: 10px;
+// }
 
 .footer-toolbar {
     $buttons-distance: 10px;
@@ -2071,7 +2054,7 @@ a,
         cursor: pointer;
         padding: 10px 10px;
         margin: 0 8px;
-        border-radius: 10px;
+        border-radius: 25px;
 
         transition: color 0.2s ease-out, background 0.2s ease-out;
 
@@ -2455,7 +2438,101 @@ a,
 
 
 
+@media screen and (min-width: $MOBILE_MAX_WIDTH) {
+  #top-gradient {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient($lightestGray 30%, transparent);
+    height: 100px;
+    opacity: 0.95;
+  }
 
+  #filterBtn {
+    position: absolute;
+    top: 0px;
+    right: 65px;
+  }
+
+  #addPlace {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    @include material-shadow(1);
+
+    img {
+      width: 18px;
+    }
+  }
+
+  #geolocationBtn {
+    margin: 0 10px 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 0;
+    @include material-shadow(1);
+
+    & > div {
+      padding: 0;
+
+      img {
+        width: 16px;
+        margin-top: 5px;
+      }
+    }
+  }
+
+  #hamburger-menu-btn {
+    background: transparent;
+    color: $green;
+    top: 5px;
+    left: 12px;
+    border-radius: 0;
+
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      background: $green;
+      color: white;
+    }
+  }
+
+  #logo {
+    opacity: 1;
+    top: 18px;
+    left: 60px;
+  }
+
+  #locationSearch {
+    max-width: 300px;
+    height: 40px;
+
+    input {
+      height: 40px;
+      top: 0;
+      left: 0;
+      padding: 0 10px 0 40px;
+    }
+
+    #clearLocationQueryBtn {
+      left: 0;
+      height: 40px;
+      padding: 8px 10px;
+      margin: 0;
+
+      .search-icon {
+        height: 16px;
+        margin-left: 2px;
+      }
+    }
+  }
+
+}
 
 
 
@@ -2975,9 +3052,12 @@ a,
 // }
 
 .header__menu-toggle {
+    top: 10px;
+    left: 10px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
     position: absolute;
-    top: 0;
-    left: 0;
     width: 48px;
     height: 48px;
     color: white;
@@ -2986,7 +3066,6 @@ a,
     padding: 13px;
     font-size: 19px;
     background-color: $green;
-    // color: $gray;
 
     &:focus,
     &:active,

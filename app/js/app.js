@@ -404,10 +404,7 @@ $(() => {
 
     // Set CSS for the control interior.
     let controlText = document.createElement('div');
-    controlText.style.color = '#30bb6a';
-    controlText.style.width = '100%';
-    controlText.style.paddingTop = '13px';
-    controlText.innerHTML = '<img src="/img/geolocation.svg" style="width: 20px;"/>';
+    controlText.innerHTML = '<img src="/img/geolocation.svg"/>';
     controlUI.appendChild(controlText);
 
     // Setup the click event listeners
@@ -1961,7 +1958,9 @@ $(() => {
       strokeWeight: 5
     });
 
-    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('addPlace'));
+    if (_isMobile) {
+      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('addPlace'));
+    }
 
     // Geolocalization button
     if (navigator.geolocation) {
