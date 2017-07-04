@@ -46,8 +46,32 @@ $filtersHightlightColor: $paleBlue;
 // Typography //////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$bodyFont: "Ubuntu", sans-serif;
-$headingFont: 'Raleway', "Ubuntu", sans-serif;
+@font-face {
+  font-family: "Co";
+  font-weight: normal;
+  src: url('/fonts/co/Co Text Corp Regular.ttf');
+}
+
+@font-face {
+  font-family: "Co";
+  font-weight: bold;
+  src: url('/fonts/co/Co Text Corp Bold.ttf');
+}
+
+@font-face {
+  font-family: "Co Headline";
+  font-weight: normal;
+  src: url('/fonts/co/Co Headline Corp Regular.ttf');
+}
+
+@font-face {
+  font-family: "Co Headline";
+  font-weight: bold;
+  src: url('/fonts/co/Co Headline Corp Bold.ttf');
+}
+
+$bodyFont: "Co", sans-serif;
+$headingFont: 'Co Headline', "Ubuntu", sans-serif;
 $bootstrapFont: 'Glyphicons Halflings';
 
 $separatorBorderStyle: 2px dotted #eee;
