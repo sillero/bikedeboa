@@ -1770,16 +1770,17 @@ $(() => {
   }
 
   function hideAllModals(callback, keepOpenedMarker) {
-    const $modal = $('.modal');
+    const $visibleModals = $('.modal').filter(':visible');
 
+    // @todo explain this hack plz
     if (!keepOpenedMarker) {
       openedMarker = null;
     }
 
-    if ($modal.is(':visible')) {
-      $modal.modal('hide').one('hidden.bs.modal', () => { 
+    if ($visibleModals.length > 0) {
+      $visibleModals.modal('hide').one('hidden.bs.modal', () => { 
         if (callback && typeof callback === 'function') {
-          callback();
+          callback(); 
         }
       });
     } else {
