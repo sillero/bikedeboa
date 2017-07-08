@@ -294,7 +294,7 @@ hr {
 }
 
 .social-link {
-  opacity: 0.3;
+  opacity: 0.5;
   transition: opacity 0.2s ease;
   border: 0;
   margin: 0 10px;
@@ -373,8 +373,9 @@ a,
     border-bottom: 1px dashed;
 
     &:hover {
+      color: $darkBlue;
       text-decoration: none;
-      border-bottom: 1px solid;
+      border-bottom: 2px solid;
     }
 }
 
@@ -540,6 +541,36 @@ a,
     }
 }
 
+#aboutModal {
+  $leading: 16px;
+
+  #about-social-buttons {
+    text-align: center;
+  }
+
+  img {
+    width: 60px;
+    height: auto;
+    margin: $GRID_SPACE auto;
+    display: block;
+  }
+
+  h2 {
+    font-size: $leading*1.618;
+    margin-top: $leading*2;
+    margin-bottom: $leading;
+    text-align: left;
+  }
+
+  h2, p {
+    color: $black;
+  }
+
+  p {
+    line-height: 1.5em;
+  }
+}
+
 #howToInstallModal {
   .browser-icon {
     width: 32px;
@@ -582,8 +613,9 @@ a,
 
   .panel-body {
     font-size: 16px;
-    color: $gray;
-    border-left: 3px solid $lightGray;
+    color: $gray; 
+    border-top: 2px solid $lighterGray;
+    background: $lightestGray
   }
 }
 
@@ -630,7 +662,7 @@ a,
     position: absolute;
     bottom: 0;
     right: 0;
-    margin: 0 $GRID_SPACE $GRID_SPACE*3;
+    margin: 0 $GRID_SPACE $GRID_SPACE*2;
 
     background: linear-gradient(45deg,#30bb6a 0,#2cd978 100%);
     border: 0;
@@ -694,7 +726,6 @@ a,
     background-color: white;
     height: 40px;
     font-family: $bodyFont;
-    font-weight: 700;
     color: $gray;
     @include material-shadow(1);
 
@@ -969,6 +1000,66 @@ a,
     margin-top: 10px;
     margin-bottom: 100px;
     @include material-shadow(3);
+
+        label {
+        font-weight: initial;
+    }
+
+    h2 {
+        font-family: $headingFont;
+        font-weight: lighter;
+        font-size: 14px;
+        color: $lightGray;
+        text-align: center;
+        // text-transform: uppercase;
+        user-select: none;
+        cursor: default;
+    }
+
+    p {
+        font-size: 16px;
+        color: $gray;
+    }
+
+    .address {
+        font-size: 14px;
+        line-height: 16px;
+        color: $gray;
+        margin-top: 0px;
+        // font-weight: 700;
+        /* margin-left: 40px; */
+
+        .skeleton-box {
+            width: 100%;
+            height: 30px;
+        }
+    }
+
+    .title {
+        // padding-left: 10px;
+        vertical-align: middle;
+        border-bottom: $separatorBorderStyle;
+        padding-bottom: $GRID_SPACE*2;
+        font-family: $headingFont;
+
+        h1 {
+          font-weight: 700;
+          font-size: 30px;
+          line-height: normal;
+          margin-top: $GRID_SPACE*2;
+          letter-spacing: -1px; 
+        }
+
+        & > .skeleton-box {
+            width: 70%;
+            height: 40px;
+            background: rgba(0,0,0,0.2);
+        }
+    }
+
+    article {
+        padding: 0 $GRID_SPACE;
+    }
 
     .text-input-wrapper {
         position: relative;
@@ -1299,96 +1390,6 @@ a,
   }
 }
 
-.modal-content {
-    border-radius: 5px;
-    overflow: hidden;
-
-    label {
-        font-weight: initial;
-    }
-
-    h2 {
-        font-family: $headingFont;
-        font-weight: lighter;
-        font-size: 14px;
-        color: $lightGray;
-        text-align: center;
-        // text-transform: uppercase;
-        user-select: none;
-        cursor: default;
-    }
-
-    p {
-        font-size: 16px;
-        color: $gray;
-    }
-
-    .address {
-        font-size: 14px;
-        line-height: 16px;
-        color: $gray;
-        margin-top: 0px;
-        // font-weight: 700;
-        /* margin-left: 40px; */
-
-        .skeleton-box {
-            width: 100%;
-            height: 30px;
-        }
-    }
-
-    .title {
-        // padding-left: 10px;
-        vertical-align: middle;
-        border-bottom: $separatorBorderStyle;
-        padding-bottom: $GRID_SPACE*2;
-        font-family: $headingFont;
-
-        h1 {
-          font-weight: 700;
-          font-size: 30px;
-          line-height: normal;
-          margin-top: $GRID_SPACE*2;
-          letter-spacing: -0.5px; 
-        }
-
-        & > .skeleton-box {
-            width: 70%;
-            height: 40px;
-            background: rgba(0,0,0,0.2);
-        }
-    }
-
-    // & .title-icon:before {
-    //     content: '';
-    //     display: inline-block;
-    //     width: 22px;
-    //     height: 28px;
-    //     background-size: 100%;
-    //     background-repeat: no-repeat;
-    //     margin-right: 5px;
-    //     vertical-align: text-top;
-    // }
-
-    // & .title-icon.green:before {
-    //     background-image: url(/img/pin_green.svg);
-    // }
-    // & .title-icon.yellow:before {
-    //     background-image: url(/img/pin_yellow.svg);
-    // }
-    // & .title-icon.red:before {
-    //     background-image: url(/img/pin_red.svg);
-    // }
-    // & .title-icon.gray:before {
-    //     background-image: url(/img/pin_gray.svg);
-    // }
-
-    article {
-        padding: 10px 5px;
-    }
-
-}
-
 .review {
     text-align: center;
     margin-top: $GRID_SPACE*2; 
@@ -1532,7 +1533,7 @@ a,
     // font-family: $headingFont;
     font-weight: 700;
     color: #fff;
-    border-radius: 5px;
+    border-radius: 25px;
     padding: 3px 10px;
     background-color: $gray; //to be overriden
 }
@@ -1991,7 +1992,7 @@ a,
 
     .side-nav__hide {
       color: black;
-      right: 16px;
+      // right: 16px;
       left: auto;
     }
 
@@ -2365,6 +2366,24 @@ a,
   }
 }
 
+.coverage-notice-modal {
+  .swal2-content {
+    text-align: left;
+  }
+
+  .panel {
+    .panel-title {
+      font-size: 18px;
+    }
+    
+    .panel-title {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+}
+
 .share-modal {
   .swal2-image {
     filter: grayscale(100%);
@@ -2631,22 +2650,22 @@ a,
         margin: 0 6px 6px 0;
       }
     }
-  }
 
-  .top-toolbar {
-    // justify-content: space-around;
-    // margin: 10px 10px -30px 0;
+    .top-toolbar {
+      // justify-content: space-around;
+      // margin: 10px 10px -30px 0;
 
-    hr {
-      // display: none;
-      height: 60px;
-    }
+      hr {
+        // display: none;
+        height: 60px;
+      }
 
-    .toolbar-item {
-      max-width: 90px;
+      .toolbar-item {
+        max-width: 90px;
 
-      label {
-        font-size: 8px;
+        label {
+          font-size: 8px;
+        }
       }
     }
   }
@@ -2729,6 +2748,15 @@ a,
     }
   }
 
+  .social-link {
+    opacity: 0.7;
+
+    img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
   // #addPlace {
   //   &.active {
   //       max-width: none;
@@ -2776,12 +2804,21 @@ a,
   }
 
   .share-modal {
-
     .share-email-btn {
       .share-email-label {
         display: none;
       }
     }
+  }
+
+  // Custom Google Autocomplete search results for mobile
+  .pac-container:before {
+      content: 'Resultados apenas no Rio Grande do Sul';
+      padding: 6px 12px;
+      display: block;
+      font-size: 12px;
+      background: #fafafa;
+      color: #b3b3b3;
   }
 }
 
@@ -2807,6 +2844,64 @@ a,
 // External ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+@keyframes confetti-slow {
+  0% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+  
+  100% { transform: translate3d(25px, 105vh, 0) rotateX(360deg) rotateY(180deg); }
+}
+
+@keyframes confetti-medium {
+  0% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+  
+  100% { transform: translate3d(100px, 105vh, 0) rotateX(100deg) rotateY(360deg); }
+}
+
+@keyframes confetti-fast {
+  0% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+  
+  100% { transform: translate3d(-50px, 105vh, 0) rotateX(10deg) rotateY(250deg); }
+}
+
+.confetti-placeholder {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.confetti-container {
+  perspective: 700px;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.confetti {
+  position: absolute;
+  z-index: 1;
+  top: -10px;
+  border-radius: 0%;
+
+  &--animation-slow {
+    animation: confetti-slow 3.15s linear 1 forwards;
+  }
+  
+  &--animation-medium {
+    animation: confetti-medium 2.25s linear 1 forwards;
+  }
+  
+  &--animation-fast {
+    animation: confetti-fast 1.75s linear 1 forwards;
+  }
+}
 
 /****** Style Star Rating Widget *****/
 /* https://codepen.io/jamesbarnett/pen/vlpkh */
@@ -3217,8 +3312,10 @@ a,
 }
 
 .side-nav__footer {
-    padding: 16px;
-    background-color: $lightestGray;
+    padding: $GRID_SPACE;
+    display: flex;
+    justify-content: center;
+    // background-color: $lightestGray;
 }
 
 .side-nav__content {
@@ -3275,6 +3372,11 @@ a,
   padding-right: 5%; 
   font-family: $bodyFont;
   @include material-shadow(3);
+
+  .swal2-content {
+    color: #333;
+    font-weight: 400;
+  }
 
   h2 {
     // font-family: $headingFont;

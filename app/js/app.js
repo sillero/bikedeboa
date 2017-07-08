@@ -28,12 +28,12 @@ $(() => {
     const shareUrl = window.location.origin + getMarkerShareUrl(openedMarker);
 
     swal({ 
-      imageUrl: '/img/icon_share.svg',
+      imageUrl: _isMobile ? '' : '/img/icon_share.svg',
       imageWidth: 80,
       imageHeight: 80,
       customClass: 'share-modal',
       html:
-        `Compartilhe este bicicletário:<br><br>
+        `Compartilhe este bicicletário<br><br>
         <div class="share-icons">
           <iframe src="https://www.facebook.com/plugins/share_button.php?href=${encodeURIComponent(shareUrl)}&layout=button&size=large&mobile_iframe=true&width=120&height=28&appId=1814653185457307" width="120" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
           <a target="_blank" href="https://twitter.com/share" data-size="large" class="twitter-share-button"></a>
@@ -44,7 +44,7 @@ $(() => {
           </button>
         </div>
         <hr>
-        ...ou clique para copiar o link:<br><br>
+        ...ou clique para copiar o link<br><br>
         <div class="share-url-container">
           <span class="glyphicon glyphicon-link share-url-icon"></span>
           <textarea id="share-url-btn" onclick="this.focus();this.select();" readonly="readonly" rows="1" data-toggle="tooltip" data-trigger="manual" data-placement="top" data-html="true" data-title="Copiado!">${shareUrl}</textarea>
@@ -332,11 +332,47 @@ $(() => {
                     lng: position.coords.longitude
                   };
 
-                  map.panTo(pos);
-                  
-                  // Set minimum map zoom
-                  if (map.getZoom() < 17) {
-                    map.setZoom(17);
+                  // Test if user located is inside our bounds
+                  if (!_mapBounds.contains(pos)) {
+                    map.panTo(pos);
+                    
+                    // Set minimum map zoom
+                    if (map.getZoom() < 17) {
+                      map.setZoom(17);
+                    }
+                  } else {  
+                    ga('send', 'event', 'Geolocation', 'out of bounds', `${pos.lat}, ${pos.lng}`); 
+          
+                    swal({ 
+                      customClass: 'coverage-notice-modal',
+                      confirmButtonText: 'Continuar usando',
+                      title: 'Oi! Só uma coisinha',
+                      html:
+                        `Percebi que tu parece estar fora do Rio Grande do Sul. Só queria te avisar que o bike de boa por enquanto só mapeia bicicletários neste estado.<br>
+                        <br>
+                        <div class="panel-group" aria-controls="coverage-notice-read-more">
+                          <div class="panel">
+                            <div class="panel-heading">
+                              <a role="button" data-toggle="collapse" class="collapsed" data-parent="#faq-accordion" href="#coverage-notice-read-more">
+                                <h4 class="panel-title">
+                                  Leia mais 
+                                </h4>
+                              </a>
+                            </div>
+                            <div id="coverage-notice-read-more" class="panel-collapse collapse">
+                              <div class="panel-body">
+                                <p>
+                                  Não ganhamos nada com o site, mas pagar os servidores em que o hospedamos tem custos. Esses custos sobem proporcionalmente ao número de acessos, por isso fomos obrigados a limitar o uso por enquanto. Se você acha que pode nos ajudar com isso <a href="mailto:bikedeboa@gmail.com"><span class="glyphicon glyphicon-envelope"></span> fale com a gente</a>.
+                                </p>
+                                <p>
+                                  Fica à vontade também pra curtir nosso <a target="_blank" rel="noopener" href="https://www.facebook.com/bikedeboaapp">Facebook</a> pra ficar sabendo de todas novidades.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>`,
+                      type: 'info'
+                    });
                   }
                 }
               }
@@ -843,9 +879,12 @@ $(() => {
             swal({
               title: 'Ops',
               html:
-                'Foi mal, por enquanto ainda não dá pra adicionar bicicletários nesta região.\
-                <br><br>\
-                <small><i>Acompanhe nossa <a target="_blank" href="https://www.facebook.com/bikedeboaapp">página no Facebook</a> para saber novidades sobre nossa cobertura, e otras cositas mas. :)</i></small>',
+                `Foi mal, por enquanto ainda não dá pra adicionar bicicletários nesta região.
+                <br><br>
+                <small>
+                  <i>Acompanha nosso <a target="_blank" href="https://www.facebook.com/bikedeboaapp">
+                  Facebook</a> para saber novidades sobre nossa cobertura, e otras cositas mas. :)</i>
+                </small>`,
               type: 'warning',
             });
           }
@@ -938,6 +977,7 @@ $(() => {
 
       Database.getPlaces( () => {
         updateMarkers();
+        
         hideSpinner();
 
         if (updatingMarker) {
@@ -974,7 +1014,10 @@ $(() => {
 
   function setupAutocomplete() {
     const inputElem = document.getElementById('locationQueryInput');
-    let autocomplete = new google.maps.places.Autocomplete(inputElem);
+    const options = {
+      strictBounds: _mapBounds
+    };
+    let autocomplete = new google.maps.places.Autocomplete(inputElem, options);
     autocomplete.bindTo('bounds', map);
 
     // var infowindow = new google.maps.InfoWindow();
@@ -1306,7 +1349,7 @@ $(() => {
           Database.getPlaces( () => {
             updateMarkers();
             hideSpinner();
-            swal('Bicicletário deletado', 'Espero que você saiba o que está fazendo. :P', 'error');
+            swal('Bicicletário deletado', 'Espero que tu saiba o que tá fazendo. :P', 'error');
           });
         });
       });
@@ -1402,6 +1445,14 @@ $(() => {
     }
   }
 
+  function startConfettis() {
+    window.confettiful = new Confettiful(document.querySelector('.confetti-placeholder'));
+  }
+
+  function stopConfettis() {
+    clearTimeout(window.confettiful.confettiInterval);
+  }
+
   function sendReviewBtnCB() {
     const m = openedMarker;
 
@@ -1436,12 +1487,23 @@ $(() => {
           ga('send', 'event', 'Review', 'create', ''+m.id, parseInt(currentPendingRating));
         }
 
-        swal('Avaliação salva', 'Valeu! Tua avaliação ajuda outros ciclistas a conhecerem melhor este bicicletário.', 'success');
+        hideSpinner();
 
-        // Update markers data
-        Database.getPlaces( () => {
+        swal({ 
+          title: 'Valeu!',
+          html: `Tua contribuição vai ajudar a conhecerem melhor este bicicletário :)`,
+          type: 'success', 
+          onOpen: () => {
+            startConfettis();
+          },
+          onClose: () => {
+            stopConfettis();
+          }
+        });
+
+        // Update marker data
+        Database.getPlaceDetails(m.id, () => {
           updateMarkers();
-          hideSpinner();
         });
       });
     };
@@ -1491,7 +1553,7 @@ $(() => {
     Database.sendRevision(revisionObj, revisionId => {
       hideSpinner();
 
-      swal('Sugestão enviada', 'Obrigado por contribuir com o Bike de Boa. Sua sugestão será avaliada pelo nosso time de colaboradores o mais rápido possível.', 'success');
+      swal('Sugestão enviada', 'Obrigado por contribuir com o bike de boa. Sua sugestão será avaliada pelo nosso time de colaboradores o mais rápido possível.', 'success');
 
       goHome();
     });
@@ -1634,7 +1696,7 @@ $(() => {
       setView('Como instalar o app', '/como-instalar', true);
     }));
 
-    $('#faqBtn').on('click', queueUiCallback.bind(this, () => {
+    $('.open-faq-btn').on('click', queueUiCallback.bind(this, () => {
       _hamburgerMenu.hide();
       ga('send', 'event', 'Misc', 'faq opened');
       setView('Perguntas frequentes', '/faq', true);
@@ -1672,7 +1734,7 @@ $(() => {
       // @todo Do this check better
       if (_isMobile && History.getState().title === 'Novo bicicletário') {
         swal({
-          text: "Você estava adicionando um bicicletário. Tem certeza que deseja descartá-lo?",
+          text: "Tu estava adicionando um bicicletário. Tem certeza que quer descartá-lo?",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: '#FF8265',
@@ -2023,6 +2085,12 @@ $(() => {
     isDesktopListener.addListener((isDesktopListener) => {
       _isMobile = isDesktopListener.matches;
     });
+
+    if (_isMobile) {
+      $('#locationQueryInput').attr('placeholder','Buscar endereço');
+    } else {
+      $('#locationQueryInput').attr('placeholder','Buscar endereço no Rio Grande do Sul'); 
+    }
 
 
     // If permission to geolocation was already granted we already center the map
