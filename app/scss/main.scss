@@ -2529,9 +2529,9 @@ a,
   #hamburger-menu-btn {
     background: transparent;
     color: $green;
-    top: 5px;
+    top: 10px;
     left: 12px;
-    border-radius: 0;
+    border-radius: 50%;
 
     transition: opacity 0.2s ease;
 
@@ -3180,13 +3180,13 @@ a,
     border-bottom-left-radius: 5px;
 
     position: absolute;
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     color: white;
     border: none;
     margin: 0;
-    padding: 13px;
-    font-size: 19px;
+    padding: 10px;
+    font-size: 17px;
     background-color: $green;
 
     &:focus,
